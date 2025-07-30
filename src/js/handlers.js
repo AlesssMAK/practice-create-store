@@ -1,13 +1,17 @@
 import iziToast from 'izitoast';
 import "izitoast/dist/css/iziToast.min.css";
 
-import { activeFirstBtn, clearProducts, highlightActiveCategory, } from './helpers';
+import { activeFirstBtn, clearProducts, highlightActiveCategory, updateCartCounter, } from './helpers';
 import { fetchCategories, fetchProducts, fetchModal,  fetchByCategory, fetchQuery  } from './products-api';
 import { renderCategories, renderProducts, renderEmptyMessage, renderModal } from './render-function';
 import { refs } from './refs.js';
 import { openModal } from './modal.js';
+import { currentProductId, updateCartBtnText } from '../cart.js';
+import { addToCart, isInCart, removeFromCart } from './storage.js';
+
 
 let currentPage = 1;
+
 
 export const getCategories = async () => {
   try {
@@ -38,7 +42,7 @@ export const getModal = async (event) => {
   
   try {
     const data = await fetchModal(cardId);
-    openModal();
+    openModal(cardId);
     renderModal(data);
 
 
@@ -96,5 +100,24 @@ export const getClearForm = () => {
   refs.form.reset();
   getProducts();
 }
+
+// click add/remove to/from cart
+
+export const addProductByIdToCart = () => {
+  if(currentProductId === null) {
+   return;
+  }  
+
+  if(isInCart(currentProductId)) {
+    removeFromCart(currentProductId);
+  } else {
+    addToCart(currentProductId);
+  }
+
+  updateCartBtnText();
+  updateCartCounter();
+};
+
+
 
 
