@@ -1,14 +1,13 @@
 import iziToast from 'izitoast';
 import "izitoast/dist/css/iziToast.min.css";
 
-import { activeFirstBtn, clearProducts, highlightActiveCategory, updateCartCounter, updateWishlistCounter} from './helpers';
+import { activeFirstBtn, clearProducts, highlightActiveCategory, updateCartCounter, updateWishlistCounter, updateWishlistBtnText} from './helpers';
 import { fetchCategories, fetchProducts, fetchModal,  fetchByCategory, fetchQuery  } from './products-api';
 import { renderCategories, renderProducts, renderEmptyMessage, renderModal } from './render-function';
 import { refs } from './refs.js';
 import { openModal } from './modal.js';
 import { currentProductId, updateCartBtnText } from '../cart.js';
-import {addToWishlist, addToCart, isInCart, isInWishlist, removeFromCart, removeFromWishlist } from './storage.js';
-import { updateWishlistBtnText } from '../wishlist.js';
+import { addToWishlist, addToCart, isInCart, isInWishlist, removeFromCart, removeFromWishlist } from './storage.js';
 
 let currentPage = 1;
 
@@ -131,7 +130,7 @@ export const addProductByIdToWishlist = () => {
     addToWishlist(currentProductId);
   }
 
-  updateWishlistBtnText();
+  updateWishlistBtnText(currentProductId);
   updateWishlistCounter();
 };
 

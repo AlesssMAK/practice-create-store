@@ -1,6 +1,6 @@
 //Логіка сторінки Cart
 
-import * as helpers from './js/helpers';
+import { updateWishlistBtnText } from './js/helpers';
 import { refs } from './js/refs';
 import { isInCart, } from './js/storage';
 
@@ -9,7 +9,7 @@ export let currentProductId = null;
 export const setCurrentProduct = productId => {
     currentProductId = productId;
   updateCartBtnText();
-
+  updateWishlistBtnText(currentProductId);
 }
 
 export const updateCartBtnText = () => {

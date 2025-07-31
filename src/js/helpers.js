@@ -1,5 +1,5 @@
 import { refs } from './refs';
-import { getCart, getWishlist } from './storage';
+import { getCart, getWishlist, isInWishlist } from './storage';
 
 export const activeFirstBtn = () => {
   const firstBtn = document.querySelector('.categories__btn');
@@ -44,4 +44,12 @@ export const updateWishlistCounter = () => {
   
   const wishlist = getWishlist();
   counter.textContent = wishlist.length;
+}
+
+export const updateWishlistBtnText = (id) => {
+  if(isInWishlist(id)) {
+    refs.addToWishlistBtn.textContent = 'Remove from Wishlist'
+  } else {
+    refs.addToWishlistBtn.textContent = 'Add to Wishlist'
+  }
 }
