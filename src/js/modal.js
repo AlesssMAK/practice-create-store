@@ -1,14 +1,31 @@
+import { refs } from "./refs";
 
-const modalEl = document.querySelector('.modal');
+const handleEscPress = (event) => {
+    
+    if (event.code === "Escape") {
+        closeModal();
+    }
+}
 
-export const openModal = () => {  
-    if (modalEl) {
-        modalEl.classList.add('modal--is-open');
-    };
+const handleBackdropClick = (event) => {
+    if (event.target === refs.modal) {
+        closeModal();
+    }
+}
+export const openModal = () => {
+    refs.modal.classList.add('modal--is-open');
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleEscPress);
+    refs.modal.addEventListener("click", handleBackdropClick);
 };
 
 export const closeModal = () => {
-    modalEl.classList.remove('modal--is-open');
-}
+    refs.modal.classList.remove('modal--is-open');
+    document.body.style.overflow = "";
+    window.removeEventListener("keydown", handleEscPress);
+    refs.modal.removeEventListener("click", handleBackdropClick);
+};
+
+
 
 

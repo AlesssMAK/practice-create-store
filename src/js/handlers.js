@@ -32,7 +32,7 @@ export const getProducts = async () => {
 };
 
 // Модальне вікно
-export const getModal = async (event) => {
+export const handleProductsListItemClick = async (event) => {
   const card = event.target.closest(".products__item");
   const cardId = card.dataset.id;  
   
