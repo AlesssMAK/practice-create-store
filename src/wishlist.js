@@ -4,7 +4,7 @@ import { refs } from './js/refs';
 import { isInWishlist, getWishlist } from './js/storage';
 import { fetchProductsByIds } from './js/products-api';
 import { renderProducts } from './js/render-function';
-import { getModal, addProductByIdToWishlist, addProductByIdToCart } from './js/handlers';
+import { handleProductsListItemClick, addProductByIdToWishlist, addProductByIdToCart } from './js/handlers';
 import { closeModal } from './js/modal';
 
 
@@ -22,7 +22,7 @@ const LoadWishListProducts = async () => {
 }
 
 LoadWishListProducts();
-refs.productsList.addEventListener("click", getModal);
+refs.productsList.addEventListener("click", handleProductsListItemClick);
 refs.modalCloseBtn.addEventListener("click", closeModal);
 refs.addToCartBtn.addEventListener('click', addProductByIdToCart);
 refs.addToWishlistBtn.addEventListener('click', addProductByIdToWishlist);
