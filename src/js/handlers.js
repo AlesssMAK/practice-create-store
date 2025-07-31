@@ -35,7 +35,7 @@ export const getProducts = async () => {
 };
 
 // Модальне вікно
-export const getModal = async (event) => {
+export const handleProductsListItemClick = async (event) => {
   const card = event.target.closest(".products__item");
   const cardId = card.dataset.id;  
   
@@ -84,7 +84,6 @@ export const getProductsByQuery = async (event) => {
     const { products } = await fetchQuery(query, currentPage);
     
     if (products.length === 0) {
-      console.log("ok");
       clearProducts();
       return refs.notFoundDiv.classList.add("not-found--visible");
     } else {
