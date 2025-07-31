@@ -1,4 +1,5 @@
 import { refs } from "./refs";
+import { setCurrentProduct } from "../cart";
 
 const handleEscPress = (event) => {
     
@@ -12,11 +13,12 @@ const handleBackdropClick = (event) => {
         closeModal();
     }
 }
-export const openModal = () => {
+export const openModal = (productId) => {
     refs.modal.classList.add('modal--is-open');
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleEscPress);
     refs.modal.addEventListener("click", handleBackdropClick);
+    setCurrentProduct(productId);
 };
 
 export const closeModal = () => {
