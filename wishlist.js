@@ -1,0 +1,2 @@
+import{r as t,u as a,g as i}from"./assets/cart-Ci43MO2Z.js";import{g as o,c as r,a as e,b as c,f as n,r as l}from"./assets/handlers-C1Fw7Kyn.js";import"./assets/vendor-Cbhu4xvy.js";const u=async()=>{const s=i();if(s.length===0)return;const d=await n(s);l(d)};u();t.productsList.addEventListener("click",o);t.modalCloseBtn.addEventListener("click",r);t.addToCartBtn.addEventListener("click",e);t.addToWishlistBtn.addEventListener("click",c);a();
+//# sourceMappingURL=wishlist.js.map
