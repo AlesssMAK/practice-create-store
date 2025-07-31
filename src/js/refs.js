@@ -1,3 +1,5 @@
+import { addToWishlist } from "./storage";
+
 export const refs = {
   categoryList: document.querySelector('.categories'),
   productsList: document.querySelector('ul.products'),     
@@ -8,4 +10,5 @@ export const refs = {
   formBtnClear: document.querySelector(".search-form__btn-clear"),
   addToCartBtn: document.querySelector('.modal-product__btn--cart'),
   navCounter: document.querySelector('.nav__count'),
+  addToWishlistBtn: document.querySelector('.modal-product__btn--wishlist')
 };

@@ -1,5 +1,5 @@
 import { refs } from './refs';
-import { getCart } from './storage';
+import { getCart, getWishlist } from './storage';
 
 export const activeFirstBtn = () => {
   const firstBtn = document.querySelector('.categories__btn');
@@ -33,4 +33,15 @@ export const updateCartCounter = () => {
   }
   const cart = getCart();
   counter.textContent = cart.length;
+}
+
+//wishlist 
+export const updateWishlistCounter = () => {
+  const counter = document.querySelector('.wishlist-items-count');
+  if (!counter) {
+    return;
+  }
+  
+  const wishlist = getWishlist();
+  counter.textContent = wishlist.length;
 }
