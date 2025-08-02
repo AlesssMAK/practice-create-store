@@ -1,8 +1,8 @@
 import { refs } from './refs';
 
 export const renderCategories = data => {
-  //   const allData = ['All', ...data];
-  const markup = data
+    const allData = ['All', ...data];
+  const markup = allData
     .map(
       el => `<li class="categories__item">
    <button class="categories__btn" type="button">${el}</button>
@@ -24,7 +24,7 @@ export const renderProducts = (products) => {
  </li>
     `).join("");
 
-  refs.productsList.innerHTML = markup;
+  refs.productsList.insertAdjacentHTML("beforeend", markup);
 };
 
 export const renderEmptyMessage = (container, message) => {
