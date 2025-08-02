@@ -1,6 +1,6 @@
 //Логіка сторінки Cart
 
-import { buyBtnCart, getModal } from './js/handlers';
+import { buyBtnCart, handleProductsListItemClick } from './js/handlers';
 import * as helpers from './js/helpers';
 import { fetchProductsByIds } from './js/products-api';
 import { updateWishlistBtnText } from './js/helpers';
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     if (refs.productsList) {
-        refs.productsList.addEventListener('click', getModal);
+        refs.productsList.addEventListener('click', handleProductsListItemClick);
       }     
 })
 
