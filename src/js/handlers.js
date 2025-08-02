@@ -1,13 +1,11 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-
-import { activeFirstBtn, clearProducts, highlightActiveCategory, updateCartCounter, updateCartSummary, updateCartTotal, updateWishlistCounter, updateWishlistBtnText, showLoadMoreButton, hideLoadMoreButton, toggleActiveClass, hideNotFoundDiv, showNotFoundDiv} from './helpers';
+import { currentProductId, updateCartBtnText, activeFirstBtn, clearProducts, highlightActiveCategory, updateCartCounter, updateCartSummary, updateCartTotal, updateWishlistCounter, updateWishlistBtnText, showLoadMoreButton, hideLoadMoreButton, toggleActiveClass, hideNotFoundDiv, showNotFoundDiv} from './helpers';
 import { fetchCategories, fetchProducts, fetchModal,  fetchByCategory, fetchQuery  } from './products-api';
 import { renderCategories, renderProducts, renderEmptyMessage, renderModal } from './render-function';
 import { refs } from './refs.js';
 import { openModal } from './modal.js';
-import { currentProductId, updateCartBtnText } from '../cart.js';
 import { addToWishlist, addToCart, isInCart, isInWishlist, removeFromCart, removeFromWishlist } from './storage.js';
 import { ITEMS_PER_PAGE } from './constants.js';
 
