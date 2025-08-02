@@ -47,6 +47,7 @@ export const updateCartTotal = (products) => {
   if(!refs.priceCartTotal) return;
   const total = products.reduce((sum, product) => sum + product.price, 0);
   refs.priceCartTotal.textContent = `$${total.toFixed(2)}`;
+  };
 
 //wishlist 
 export const updateWishlistCounter = () => {
