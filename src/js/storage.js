@@ -9,7 +9,6 @@ export const saveCart = cart => {
 }
 
 export const addToCart = id => {
-    console.log('📦 Додаємо до кошика:', id);
     const cart = getCart();
     if(!cart.includes(id)) {
         cart.push(id);

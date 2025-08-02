@@ -8,26 +8,37 @@ export const fetchCategories = async () => {
   return data;
 };
 
-export const fetchProducts = async (page) => {
-    const skip = (page - 1) * ITEMS_PER_PAGE;
-    const { data } = await axios(`${ENDPOINTS.PRODUCTS}?limit=${ITEMS_PER_PAGE}&skip=${skip}`);
-    return data;
-    
+export const fetchProducts = async page => {
+  const skip = (page - 1) * ITEMS_PER_PAGE;
+  const { data } = await axios(
+    `${ENDPOINTS.PRODUCTS}?limit=${ITEMS_PER_PAGE}&skip=${skip}`
+  );
+  return data;
 };
 
-export const fetchByCategory = async (category) => {
+export const fetchByCategory = async category => {
   const { data } = await axios(`${ENDPOINTS.PRODUCTS_BY_CATEGORY}/${category}`);
   return data;
 };
 
-export const fetchModal = async (id) => {
+export const fetchModal = async id => {
   const { data } = await axios(`${ENDPOINTS.PRODUCTS_BY_ID}/${id}`);
   return data;
 };
 
-export const fetchQuery = async (query, page) => { 
+export const fetchQuery = async (query, page) => {
   const skip = (page - 1) * ITEMS_PER_PAGE;
-  const { data } = await axios(`${ENDPOINTS.PRODUCTS_BY_QUERY}?q=${query}&limit=${ITEMS_PER_PAGE}&skip=${skip}`);
+  const { data } = await axios(
+    `${ENDPOINTS.PRODUCTS_BY_QUERY}?q=${query}&limit=${ITEMS_PER_PAGE}&skip=${skip}`
+  );
   return data;
 };
 
+// запит для Сторінка Cart!!
+
+export const fetchProductsByIds = async ids => {
+  const promises = ids.map(id =>
+    axios(`${ENDPOINTS.PRODUCTS_BY_ID}/${id}`).then(res => res.data)
+  );
+  return await Promise.all(promises);
+};

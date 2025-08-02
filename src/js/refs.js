@@ -8,4 +8,7 @@ export const refs = {
   formBtnClear: document.querySelector(".search-form__btn-clear"),
   addToCartBtn: document.querySelector('.modal-product__btn--cart'),
   navCounter: document.querySelector('.nav__count'),
+  countCartItem: document.querySelector('[data-count]'),
+  priceCartTotal: document.querySelector('[data-price]'),
+  buyBtn: document.querySelector('.cart-summary__btn'),
 };
