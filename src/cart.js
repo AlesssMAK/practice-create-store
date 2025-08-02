@@ -36,7 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     if (refs.productsList) {
         refs.productsList.addEventListener('click', handleProductsListItemClick);
-      }     
+    }   
+    refs.modalCloseBtn.addEventListener("click", closeModal);
+    refs.addToCartBtn.addEventListener('click', addProductByIdToCart);
+    refs.addToWishlistBtn.addEventListener('click', addProductByIdToWishlist);    
 })
 
 
