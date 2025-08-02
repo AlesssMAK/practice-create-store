@@ -42,19 +42,19 @@ export const fetchProductsByIds = async (Ids) => {
   } 
 };
 
-/*export const fetchQuery = async (query, page) => { 
+export const fetchQuery = async (query, page) => { 
   const skip = (page - 1) * ITEMS_PER_PAGE;
   const { data } = await axios(
     `${ENDPOINTS.PRODUCTS_BY_QUERY}?q=${query}&limit=${ITEMS_PER_PAGE}&skip=${skip}`
   );
   return data;
-};*/
+};
 
 // запит для Сторінка Cart!!
 
-export const fetchProductsByIds = async ids => {
+/*export const fetchProductsByIds = async ids => {
   const promises = ids.map(id =>
     axios(`${ENDPOINTS.PRODUCTS_BY_ID}/${id}`).then(res => res.data)
   );
   return await Promise.all(promises);
-};
+};*/
