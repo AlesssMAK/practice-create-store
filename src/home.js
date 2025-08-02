@@ -3,7 +3,6 @@ import {
   addProductByIdToCart,
   getCategories,
   getClearForm,
-  getModal,
   getProducts,
   getProductsByQuery,
   handleCategoryClick,
