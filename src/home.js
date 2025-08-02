@@ -1,5 +1,16 @@
-import { getProducts, getCategories, getClearForm, getProductsByQuery, handleCategoryClick, handleProductsListItemClick, addProductByIdToWishlist,addProductByIdToCart } from './js/handlers';
-// import { , , getCategories, getClearForm, getProducts, getProductsByQuery, handleCategoryClick } from './js/handlers';
+
+import {
+  addProductByIdToCart,
+  getCategories,
+  getClearForm,
+  getModal,
+  getProducts,
+  getProductsByQuery,
+  handleCategoryClick,
+  handleProductsListItemClick,
+  addProductByIdToWishlist,
+  addProductByIdToCart
+} from './js/handlers';
 import { closeModal } from './js/modal';
 import { refs } from './js/refs';
 import { updateWishlistCounter } from './js/helpers';
