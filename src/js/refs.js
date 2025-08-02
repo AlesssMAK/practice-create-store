@@ -11,5 +11,6 @@ export const refs = {
   modal: document.querySelector('.modal'),
   addToCartBtn: document.querySelector('.modal-product__btn--cart'),
   navCounter: document.querySelector('.nav__count'),
-  addToWishlistBtn: document.querySelector('.modal-product__btn--wishlist')
+  addToWishlistBtn: document.querySelector('.modal-product__btn--wishlist'),
+  loadMoreBtn: document.querySelector('.load-more-btn'),
 };
