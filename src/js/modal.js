@@ -1,17 +1,35 @@
+import { refs } from "./refs";
 import { setCurrentProduct } from "../cart";
 
-const modalEl = document.querySelector('.modal');
-
-export const openModal = productId => {  
-    setCurrentProduct(productId);
-
-    if (modalEl) {
-        modalEl.classList.add('modal--is-open');
+const handleEscPress = (event) => {
+    
+    if (event.code === "Escape") {
+        closeModal();
     };
 };
 
+
+const handleBackdropClick = (event) => {
+    if (event.target === refs.modal) {
+        closeModal();
+    }
+};
+
+export const openModal = (productId) => {
+    refs.modal.classList.add('modal--is-open');
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleEscPress);
+    refs.modal.addEventListener("click", handleBackdropClick);
+    setCurrentProduct(productId);
+};
+
 export const closeModal = () => {
-    modalEl.classList.remove('modal--is-open');
-}
+    refs.modal.classList.remove('modal--is-open');
+    document.body.style.overflow = "";
+    window.removeEventListener("keydown", handleEscPress);
+    refs.modal.removeEventListener("click", handleBackdropClick);
+};
+
+
 
 

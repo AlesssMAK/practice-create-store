@@ -21,18 +21,34 @@ export const fetchByCategory = async category => {
   return data;
 };
 
-export const fetchModal = async id => {
+
+// Функція повертає один продукт по його ID
+export const fetchModal = async (id) => {
   const { data } = await axios(`${ENDPOINTS.PRODUCTS_BY_ID}/${id}`);
   return data;
 };
 
-export const fetchQuery = async (query, page) => {
+
+// функція повертає массив продуктів за заданими ID
+export const fetchProductsByIds = async (Ids) => {
+  try {
+    const { data } = await axios(`${ENDPOINTS.PRODUCTS}?limit=0`);
+    const allProducts = data;
+    const filteredProducts = allProducts.products.filter(product => Ids.includes(String(product.id)));
+    return filteredProducts;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  } 
+};
+
+/*export const fetchQuery = async (query, page) => { 
   const skip = (page - 1) * ITEMS_PER_PAGE;
   const { data } = await axios(
     `${ENDPOINTS.PRODUCTS_BY_QUERY}?q=${query}&limit=${ITEMS_PER_PAGE}&skip=${skip}`
   );
   return data;
-};
+};*/
 
 // запит для Сторінка Cart!!
 

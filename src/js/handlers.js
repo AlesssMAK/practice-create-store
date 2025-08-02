@@ -1,31 +1,13 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import {
-  activeFirstBtn,
-  clearProducts,
-  highlightActiveCategory,
-  updateCartCounter,
-  updateCartSummary,
-  updateCartTotal,
-} from './helpers';
-import {
-  fetchCategories,
-  fetchProducts,
-  fetchModal,
-  fetchByCategory,
-  fetchQuery,
-} from './products-api';
-import {
-  renderCategories,
-  renderProducts,
-  renderEmptyMessage,
-  renderModal,
-} from './render-function';
+import { activeFirstBtn, clearProducts, highlightActiveCategory, updateCartCounter, updateCartSummary, updateWishlistCounter, updateCartTotal, updateWishlistBtnText} from './helpers';
+import { fetchCategories, fetchProducts, fetchModal,  fetchByCategory, fetchQuery  } from './products-api';
+import { renderCategories, renderProducts, renderEmptyMessage, renderModal } from './render-function';
 import { refs } from './refs.js';
 import { openModal } from './modal.js';
 import { currentProductId, updateCartBtnText } from '../cart.js';
-import { addToCart, isInCart, removeFromCart } from './storage.js';
+import { addToWishlist, addToCart, isInCart, isInWishlist, removeFromCart, removeFromWishlist, addToCart, isInCart, removeFromCart } from './storage.js';
 
 let currentPage = 1;
 
@@ -51,10 +33,10 @@ export const getProducts = async () => {
 };
 
 // Модальне вікно
-export const getModal = async event => {
-  const card = event.target.closest('.products__item');
-  const cardId = card.dataset.id;
-
+export const handleProductsListItemClick = async (event) => {
+  const card = event.target.closest(".products__item");
+  const cardId = card.dataset.id;  
+  
   try {
     const data = await fetchModal(cardId);
     openModal(cardId);
@@ -92,7 +74,6 @@ export const getProductsByQuery = async event => {
     const { products } = await fetchQuery(query, currentPage);
 
     if (products.length === 0) {
-      console.log('ok');
       clearProducts();
       return refs.notFoundDiv.classList.add('not-found--visible');
     } else {
@@ -125,6 +106,7 @@ export const addProductByIdToCart = () => {
   updateCartCounter();
 };
 
+
 // click buyBtn
 
 export const buyBtnCart = () => {
@@ -148,3 +130,21 @@ export const buyBtnCart = () => {
   updateCartSummary([]);
   updateCartTotal([]);
 };
+
+//Iryna Wishlist click handler
+
+export const addProductByIdToWishlist = () => {
+  if(currentProductId === null) {
+   return;
+  }  
+
+  if(isInWishlist(currentProductId)) {
+    removeFromWishlist(currentProductId);
+  } else {
+    addToWishlist(currentProductId);
+  }
+
+  updateWishlistBtnText(currentProductId);
+  updateWishlistCounter();
+};
+

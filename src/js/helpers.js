@@ -1,5 +1,5 @@
 import { refs } from './refs';
-import { getCart } from './storage';
+import { getCart, getWishlist, isInWishlist } from './storage';
 
 export const activeFirstBtn = () => {
   const firstBtn = document.querySelector('.categories__btn');
@@ -33,17 +33,36 @@ export const updateCartCounter = () => {
   }
   const cart = getCart();
   counter.textContent = cart.length;
-}
+};
+
 
 export const updateCartSummary = products => {
   if(!Array.isArray(products)) return;
   if (!refs.countCartItem) return;
   refs.countCartItem.textContent = products.length;
-}
+};
 
 export const updateCartTotal = (products) => {
   if(!Array.isArray(products)) return;
   if(!refs.priceCartTotal) return;
   const total = products.reduce((sum, product) => sum + product.price, 0);
   refs.priceCartTotal.textContent = `$${total.toFixed(2)}`;
+
+//wishlist 
+export const updateWishlistCounter = () => {
+  const counter = document.querySelector('.wishlist-items-count');
+  if (!counter) {
+    return;
+  }
+  
+  const wishlist = getWishlist();
+  counter.textContent = wishlist.length;
+};
+
+export const updateWishlistBtnText = (id) => {
+  if(isInWishlist(id)) {
+    refs.addToWishlistBtn.textContent = 'Remove from Wishlist'
+  } else {
+    refs.addToWishlistBtn.textContent = 'Add to Wishlist'
+  }
 }

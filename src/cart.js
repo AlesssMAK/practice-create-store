@@ -3,6 +3,7 @@
 import { buyBtnCart, getModal } from './js/handlers';
 import * as helpers from './js/helpers';
 import { fetchProductsByIds } from './js/products-api';
+import { updateWishlistBtnText } from './js/helpers';
 import { refs } from './js/refs';
 import { renderProducts } from './js/render-function';
 import { getCart, isInCart, } from './js/storage';
@@ -13,7 +14,7 @@ export const cartData = "ids";
 export const setCurrentProduct = productId => {
     currentProductId = productId;
   updateCartBtnText();
-
+  updateWishlistBtnText(currentProductId);
 }
 
 export const updateCartBtnText = () => {
