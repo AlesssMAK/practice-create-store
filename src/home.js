@@ -1,6 +1,5 @@
 
 import {
-  addProductByIdToCart,
   getCategories,
   getClearForm,
   getProducts,
