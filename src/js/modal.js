@@ -5,14 +5,16 @@ const handleEscPress = (event) => {
     
     if (event.code === "Escape") {
         closeModal();
-    }
-}
+    };
+};
+
 
 const handleBackdropClick = (event) => {
     if (event.target === refs.modal) {
         closeModal();
     }
-}
+};
+
 export const openModal = (productId) => {
     refs.modal.classList.add('modal--is-open');
     document.body.style.overflow = "hidden";

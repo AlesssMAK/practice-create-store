@@ -1,7 +1,8 @@
 import iziToast from 'izitoast';
-import "izitoast/dist/css/iziToast.min.css";
+import 'izitoast/dist/css/iziToast.min.css';
 
-import { activeFirstBtn, clearProducts, highlightActiveCategory, updateCartCounter, updateWishlistCounter, updateWishlistBtnText, showLoadMoreButton, hideLoadMoreButton, toggleActiveClass, hideNotFoundDiv, showNotFoundDiv} from './helpers';
+
+import { activeFirstBtn, clearProducts, highlightActiveCategory, updateCartCounter, updateCartSummary, updateCartTotal, updateWishlistCounter, updateWishlistBtnText, showLoadMoreButton, hideLoadMoreButton, toggleActiveClass, hideNotFoundDiv, showNotFoundDiv} from './helpers';
 import { fetchCategories, fetchProducts, fetchModal,  fetchByCategory, fetchQuery  } from './products-api';
 import { renderCategories, renderProducts, renderEmptyMessage, renderModal } from './render-function';
 import { refs } from './refs.js';
@@ -13,11 +14,13 @@ import { ITEMS_PER_PAGE } from './constants.js';
 let currentPage = 1;
 let currentSearchQuery = "";
 
+
 export const getCategories = async () => {
   try {
     const data = await fetchCategories();
     
     renderCategories(data);
+
     activeFirstBtn();
   } catch (error) {
     iziToast.error({ title: 'Error', message: error.message });
@@ -27,6 +30,7 @@ export const getCategories = async () => {
 export const getProducts = async () => {
   try {
     const { products, total } = await fetchProducts(currentPage);
+
     renderProducts(products);
 
     const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
@@ -42,7 +46,6 @@ export const getProducts = async () => {
 
   } catch (error) {
     iziToast.error({ title: 'Error', message: error.message });
-    
   }
 };
 
@@ -82,21 +85,16 @@ export const handleProductsListItemClick = async (event) => {
     openModal(cardId);
     renderModal(data);
 
-
   } catch (error) {
-    iziToast.error({ title: 'Error', message: error.message });
     console.log(error);
-    
   }
-}
-
+};
 
 //  Клік по категорії ===
-export const handleCategoryClick = async (e) => {
+export const handleCategoryClick = async e => {
   if (!e.target.classList.contains('categories__btn')) return;
 
   hideLoadMoreButton();
-  
   clearProducts();
 
   try {
@@ -131,11 +129,10 @@ export const handleProductsByQuery = async (event) => {
   event.preventDefault();
   const query = event.target.elements.searchValue.value.trim();
   
-
   if (!query) return;
   clearProducts();
   hideLoadMoreButton();
-  try {
+
     const { products } = await fetchQuery(query);
     
     if (products.length === 0) {
@@ -146,9 +143,8 @@ export const handleProductsByQuery = async (event) => {
       hideNotFoundDiv();
     };    
   } catch (error) {
-console.log(error);
-;
-  }
+console.log(error
+};
 };
 
 // очищення форми - Олексій
@@ -156,16 +152,16 @@ export const handleClearForm = () => {
   clearProducts();
   refs.form.reset();
   getProducts();
-}
+};
 
 // click add/remove to/from cart
 
 export const addProductByIdToCart = () => {
-  if(currentProductId === null) {
-   return;
-  }  
+  if (currentProductId === null) {
+    return;
+  }
 
-  if(isInCart(currentProductId)) {
+  if (isInCart(currentProductId)) {
     removeFromCart(currentProductId);
   } else {
     addToCart(currentProductId);
@@ -173,6 +169,31 @@ export const addProductByIdToCart = () => {
 
   updateCartBtnText();
   updateCartCounter();
+};
+
+
+// click buyBtn
+
+export const buyBtnCart = () => {
+
+  const cartData = JSON.parse(localStorage.getItem('cart'));
+  if (!Array.isArray(cartData) || cartData.length === 0) {
+    iziToast.warning({
+      title: 'Oops!',
+      message: 'Кошик порожній. Додайте товари перед покупкою.',
+      position: 'topRight',
+    });
+    return;
+  }
+  iziToast.success({
+    title: 'Success',
+    message: 'You successfully bought all products in the cart!',
+    position: 'topRight',
+  });
+  localStorage.removeItem('cart');
+  clearProducts();
+  updateCartSummary([]);
+  updateCartTotal([]);
 };
 
 //Iryna Wishlist click handler

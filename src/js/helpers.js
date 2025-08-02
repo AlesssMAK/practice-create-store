@@ -46,7 +46,21 @@ export const updateCartCounter = () => {
   }
   const cart = getCart();
   counter.textContent = cart.length;
-}
+};
+
+
+export const updateCartSummary = products => {
+  if(!Array.isArray(products)) return;
+  if (!refs.countCartItem) return;
+  refs.countCartItem.textContent = products.length;
+};
+
+export const updateCartTotal = (products) => {
+  if(!Array.isArray(products)) return;
+  if(!refs.priceCartTotal) return;
+  const total = products.reduce((sum, product) => sum + product.price, 0);
+  refs.priceCartTotal.textContent = `$${total.toFixed(2)}`;
+  };
 
 //wishlist 
 export const updateWishlistCounter = () => {
@@ -57,7 +71,7 @@ export const updateWishlistCounter = () => {
   
   const wishlist = getWishlist();
   counter.textContent = wishlist.length;
-}
+};
 
 export const updateWishlistBtnText = (id) => {
   if(isInWishlist(id)) {
@@ -65,8 +79,7 @@ export const updateWishlistBtnText = (id) => {
   } else {
     refs.addToWishlistBtn.textContent = 'Add to Wishlist'
   }
-}
-
+};
 
 export const showLoadMoreButton = () => {
     refs.loadMoreBtn.classList.remove("is-hidden");

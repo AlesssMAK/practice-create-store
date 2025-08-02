@@ -1,3 +1,4 @@
+
 import { getProducts, getCategories, handleClearForm, handleProductsByQuery, handleCategoryClick, handleProductsListItemClick, addProductByIdToWishlist,addProductByIdToCart, handleLoadMoreClick } from './js/handlers';
 import { closeModal } from './js/modal';
 import { refs } from './js/refs';
