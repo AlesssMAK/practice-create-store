@@ -1,5 +1,5 @@
 import { refs } from "./refs";
-import { setCurrentProduct } from "../cart";
+import { setCurrentProduct } from "./helpers";
 
 const handleEscPress = (event) => {
     
