@@ -42,11 +42,8 @@ export const fetchProductsByIds = async (Ids) => {
   } 
 };
 
-export const fetchQuery = async (query, page) => { 
-  const skip = (page - 1) * ITEMS_PER_PAGE;
-  const { data } = await axios(
-    `${ENDPOINTS.PRODUCTS_BY_QUERY}?q=${query}&limit=${ITEMS_PER_PAGE}&skip=${skip}`
-  );
+export const fetchQuery = async (query) => { 
+  const { data } = await axios(`${ENDPOINTS.PRODUCTS_BY_QUERY}?q=${query}`);
   return data;
 };
 

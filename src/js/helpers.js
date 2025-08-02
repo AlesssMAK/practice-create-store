@@ -1,3 +1,5 @@
+
+import { getProducts } from './handlers';
 import { refs } from './refs';
 import { getCart, getWishlist, isInWishlist, isInCart } from './storage';
 
@@ -23,6 +25,9 @@ export const activeFirstBtn = () => {
   const firstBtn = document.querySelector('.categories__btn');
   if (firstBtn) {
     firstBtn.classList.add('categories__btn--active');
+    // firstBtn.addEventListener("click", () => {
+    //   getProducts();
+    // });
   }
   //   [...refs.categoryList.children].forEach(li => {
   //     const activeBtn = li.firstElementChild;
@@ -32,6 +37,14 @@ export const activeFirstBtn = () => {
   //   });
 };
 // 6. Підсвітка активної категорії ===
+
+export const toggleActiveClass = (elements, activeElement, activeClass) => {
+  elements.forEach(element => {
+    element.classList.remove(activeClass);
+  });
+
+  activeElement.classList.add(activeClass);
+ };
 
 export const highlightActiveCategory = (activeButton) => {
   document.querySelectorAll('.categories__btn').forEach(btn => btn.classList.remove('categories__btn--active'));
@@ -84,4 +97,20 @@ export const updateWishlistBtnText = (id) => {
   } else {
     refs.addToWishlistBtn.textContent = 'Add to Wishlist'
   }
-}
+};
+
+export const showLoadMoreButton = () => {
+    refs.loadMoreBtn.classList.remove("is-hidden");
+};
+
+export const hideLoadMoreButton = () => {
+    refs.loadMoreBtn.classList.add("is-hidden");
+};
+
+export const showNotFoundDiv = () => { 
+  refs.notFoundDiv.classList.add("not-found--visible");
+};
+
+export const hideNotFoundDiv = () => { 
+  refs.notFoundDiv.classList.remove("not-found--visible");
+};
