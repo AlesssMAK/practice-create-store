@@ -7,7 +7,7 @@ import { renderCategories, renderProducts, renderEmptyMessage, renderModal } fro
 import { refs } from './refs.js';
 import { openModal } from './modal.js';
 import { currentProductId, updateCartBtnText } from '../cart.js';
-import { addToWishlist, addToCart, isInCart, isInWishlist, removeFromCart, removeFromWishlist, addToCart, isInCart, removeFromCart } from './storage.js';
+import { addToWishlist, addToCart, isInCart, isInWishlist, removeFromCart, removeFromWishlist } from './storage.js';
 
 let currentPage = 1;
 
