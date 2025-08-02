@@ -132,14 +132,13 @@ export const handleProductsByQuery = async (event) => {
   if (!query) return;
   clearProducts();
   hideLoadMoreButton();
-
+try {
     const { products } = await fetchQuery(query);
     
     if (products.length === 0) {
       showNotFoundDiv();
     } else {
       renderProducts(products);
-      console.log("ok");
       hideNotFoundDiv();
     };    
   } catch (error) {
