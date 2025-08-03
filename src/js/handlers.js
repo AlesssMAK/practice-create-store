@@ -1,9 +1,9 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import { currentProductId, updateCartBtnText, activeFirstBtn, clearProducts, highlightActiveCategory, updateCartCounter, updateCartSummary, updateCartTotal, updateWishlistCounter, updateWishlistBtnText, showLoadMoreButton, hideLoadMoreButton, toggleActiveClass, hideNotFoundDiv, showNotFoundDiv} from './helpers';
+import { currentProductId, updateCartBtnText, activeFirstBtn, clearProducts, updateCartCounter, updateCartSummary, updateCartTotal, updateWishlistCounter, updateWishlistBtnText, showLoadMoreButton, hideLoadMoreButton, toggleActiveClass, hideNotFoundDiv, showNotFoundDiv} from './helpers';
 import { fetchCategories, fetchProducts, fetchModal,  fetchByCategory, fetchQuery  } from './products-api';
-import { renderCategories, renderProducts, renderEmptyMessage, renderModal } from './render-function';
+import { renderCategories, renderProducts, renderModal } from './render-function';
 import { refs } from './refs.js';
 import { openModal } from './modal.js';
 import { addToWishlist, addToCart, isInCart, isInWishlist, removeFromCart, removeFromWishlist } from './storage.js';
@@ -11,6 +11,7 @@ import { ITEMS_PER_PAGE } from './constants.js';
 
 let currentPage = 1;
 let currentSearchQuery = "";
+let selectedCategory = 'All';
 
 
 export const getCategories = async () => {
@@ -21,12 +22,13 @@ export const getCategories = async () => {
 
     activeFirstBtn();
   } catch (error) {
-    iziToast.error({ title: 'Error', message: error.message });
+    console.log(error);
   }
 };
 
 export const getProducts = async () => {
   try {
+    currentPage = 1;
     const { products, total } = await fetchProducts(currentPage);
 
     renderProducts(products);
@@ -43,24 +45,17 @@ export const getProducts = async () => {
     };
 
   } catch (error) {
-    iziToast.error({ title: 'Error', message: error.message });
+    console.log(error);
   }
 };
 
 export const handleLoadMoreClick = async () => {
+  if (selectedCategory !== 'All') return;
   currentPage++;
   hideLoadMoreButton();
 
   try {
-    let data;
-
-    if (currentSearchQuery) {
-      data = await fetchQuery(currentSearchQuery, currentPage);
-    } else {
-      data = await fetchProducts(currentPage);
-    }
-
-    const { products, total } = data;
+    const { products, total } = await fetchProducts(currentPage);
     renderProducts(products);
 
     const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
@@ -69,7 +64,7 @@ export const handleLoadMoreClick = async () => {
     }
 
   } catch (error) {
-    iziToast.error({ title: 'Error', message: error.message });
+    console.log(error);
   }
 };
 
@@ -94,9 +89,11 @@ export const handleCategoryClick = async e => {
 
   hideLoadMoreButton();
   clearProducts();
+  currentPage = 1;
 
   try {
     const currentCategory = e.target.textContent;
+    selectedCategory = currentCategory;
     const allCategoryBtn = document.querySelectorAll(".categories__btn");
     toggleActiveClass(allCategoryBtn, e.target, "categories__btn--active");
     let productsData;
@@ -111,12 +108,15 @@ export const handleCategoryClick = async e => {
     if (productsData.products.length > 0) {
       renderProducts(productsData.products);
       hideLoadMoreButton();
+
+    if (currentCategory === 'All') {
+        const totalPages = Math.ceil(productsData.total / ITEMS_PER_PAGE);
+        if (currentPage < totalPages) showLoadMoreButton();
+      }
     } else {
-      showNotFoundDiv
-    }
-    
+      showNotFoundDiv();
+  }
   } catch (error) {
-    iziToast.error({ title: 'Error', message: error.message });
     console.log(error);
   }
 };
@@ -141,12 +141,13 @@ try {
     };    
   } catch (error) {
 console.log(error);
-};
+}
 };
 
 // очищення форми - Олексій
 export const handleClearForm = () => {
   clearProducts();
+  hideNotFoundDiv();
   refs.form.reset();
   getProducts();
 };
