@@ -42,14 +42,8 @@ export const toggleActiveClass = (elements, activeElement, activeClass) => {
   elements.forEach(element => {
     element.classList.remove(activeClass);
   });
-
   activeElement.classList.add(activeClass);
  };
-
-export const highlightActiveCategory = (activeButton) => {
-  document.querySelectorAll('.categories__btn').forEach(btn => btn.classList.remove('categories__btn--active'));
-  activeButton.classList.add('categories__btn--active');
-};
 
 export const clearProducts = () => {
   refs.productsList.innerHTML = "";
