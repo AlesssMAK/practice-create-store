@@ -8,22 +8,28 @@ import { renderEmptyMessage, renderProducts } from './js/render-function';
 import { getCart } from './js/storage';
 import { closeModal } from './js/modal';
 
+document.addEventListener('DOMContentLoaded', () => {
+    helpers.updateCartCounter();
+    helpers.updateWishlistCounter(); 
+});
+
 const loadCartProducts = async () => {
-    const cartListItems = getCart(); // берем список id из localStorage
+    const cartListItems = getCart(); 
     
     if (!cartListItems.length) { 
         renderEmptyMessage(refs.productsList, 'Your cart is empty.');
-        helpers.updateCartSummary([]); // сбрасываем данные
+        helpers.updateCartSummary([]); 
         helpers.updateCartTotal([]);
         return;
     }
 
     try {
         const products = await fetchProductsByIds(cartListItems);
-        refs.productsList.innerHTML = ''; // 👈 очищаем список перед отрисовкой
+        refs.productsList.innerHTML = ''; 
         renderProducts(products);
         helpers.updateCartSummary(products);
         helpers.updateCartTotal(products);
+        
     } catch (error) {
         console.error("Помилка завантаження товарів:", error);
     }
@@ -50,4 +56,4 @@ document.addEventListener('DOMContentLoaded', () => {
     refs.addToWishlistBtn.addEventListener('click', addProductByIdToWishlist);    
 });
 
-helpers.updateCartCounter(); // 👈 теперь явно из helpers
+helpers.updateCartCounter(); 
