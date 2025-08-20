@@ -10,13 +10,14 @@ import { closeModal } from './js/modal';
 
 const LoadWishListProducts = async () => {
     const wishlistItems = getWishlist();
-
+    
     if (wishlistItems.length === 0) {
         renderEmptyMessage(refs.productsList, 'Your wishlist is empty.');
         return; 
     } 
 
     const wishlistProducts = await fetchProductsByIds(wishlistItems);
+    refs.productsList.innerHTML = '';
     renderProducts(wishlistProducts);
 
 }
