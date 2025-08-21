@@ -2,12 +2,13 @@
 import { getProducts, getCategories, handleClearForm, handleProductsByQuery, handleCategoryClick, handleProductsListItemClick, addProductByIdToWishlist,addProductByIdToCart, handleLoadMoreClick } from './js/handlers';
 import { closeModal } from './js/modal';
 import { refs } from './js/refs';
-import { updateWishlistCounter } from './js/helpers';
+import { updateWishlistCounter, updateCartCounter} from './js/helpers';
 
 //Логіка сторінки Home
 getCategories();
 getProducts();
 updateWishlistCounter();
+updateCartCounter();
 refs.categoryList.addEventListener('click', handleCategoryClick);
 refs.productsList.addEventListener("click", handleProductsListItemClick);
 refs.modalCloseBtn.addEventListener("click", closeModal);
