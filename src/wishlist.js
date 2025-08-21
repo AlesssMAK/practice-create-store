@@ -1,5 +1,5 @@
 //Логіка сторінки Wishlist
-import {updateWishlistCounter }  from './js/helpers';
+import {updateWishlistCounter, updateCartCounter}  from './js/helpers';
 import { refs } from './js/refs';
 import { isInWishlist, getWishlist } from './js/storage';
 import { fetchProductsByIds } from './js/products-api';
@@ -8,15 +8,17 @@ import { handleProductsListItemClick, addProductByIdToWishlist, addProductByIdTo
 import { closeModal } from './js/modal';
 
 
+
 const LoadWishListProducts = async () => {
     const wishlistItems = getWishlist();
-
+    
     if (wishlistItems.length === 0) {
         renderEmptyMessage(refs.productsList, 'Your wishlist is empty.');
         return; 
     } 
 
     const wishlistProducts = await fetchProductsByIds(wishlistItems);
+    refs.productsList.innerHTML = '';
     renderProducts(wishlistProducts);
 
 }
@@ -31,3 +33,4 @@ refs.modalCloseBtn.addEventListener("click", closeModalWishlist);
 refs.addToCartBtn.addEventListener('click', addProductByIdToCart);
 refs.addToWishlistBtn.addEventListener('click', addProductByIdToWishlist);
 updateWishlistCounter();
+updateCartCounter();
