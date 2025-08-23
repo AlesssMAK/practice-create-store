@@ -1,33 +1,54 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
   --primary-text-color: #121212;
   --secondary-text-color: #555555;
   --bg-color: #ffffff;
   --card-bg-color: #f9f9f9;
   --border-color: #e0e0e0;
   --accent-color: #ff6b0a;
+}
 
-  [data-theme='dark'] {
-    --primary-text-color: #ffffff;
-    --secondary-text-color: #adadad;
-    --bg-color: #121212;
-    --card-bg-color: #1e1e1e;
-    --border-color: #333333;
-    --accent-color: #ff6b0a;
-  }
+[data-theme='dark'] {
+  --primary-text-color: #ffffff;
+  --secondary-text-color: #adadad;
+  --bg-color: #121212;
+  --card-bg-color: #1e1e1e;
+  --border-color: #333333;
+  --accent-color: #ff6b0a;
 }
 
 body {
   background-color: var(--bg-color);
   color: var(--primary-text-color);
   transition: background-color 0.3s, color 0.3s;
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+}
+
+/* Стили для кнопки переключения */
+.theme-toggle-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--card-bg-color);
+  color: var(--primary-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle-btn::before {
+  content: '🌞';
+  font-size: 18px;
+  transition: content 0.3s;
+}
+
+[data-theme='dark'] .theme-toggle-btn::before {
+  content: '🌙';
 }
