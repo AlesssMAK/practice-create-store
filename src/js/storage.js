@@ -1,52 +1,70 @@
-import { CART_KEY, WISHLIST_KEY } from "./constants"
+import { CART_KEY, WISHLIST_KEY } from './constants';
 
 export const getCart = () => {
-    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
-}
+  return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+};
 
 export const saveCart = cart => {
-    return localStorage.setItem(CART_KEY, JSON.stringify(cart));
-}
+  return localStorage.setItem(CART_KEY, JSON.stringify(cart));
+};
 
 export const addToCart = id => {
-    const cart = getCart();
-    if(!cart.includes(id)) {
-        cart.push(id);
-        saveCart(cart);
-    }
-}
+  const cart = getCart();
+  if (!cart.includes(id)) {
+    cart.push(id);
+    saveCart(cart);
+  }
+};
 
 export const removeFromCart = id => {
-    const updateCart = getCart().filter(itemId => itemId !== id);
-    saveCart(updateCart);
-}
+  const updateCart = getCart().filter(itemId => itemId !== id);
+  saveCart(updateCart);
+};
 
-export const isInCart = id => getCart().includes(id); 
+export const isInCart = id => getCart().includes(id);
 
 // Iryna M.
 // /for wishlist
 
 export const getWishlist = () => {
-    // повертаємо массив ID продуктів
-    return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || [];
-}
+  // повертаємо массив ID продуктів
+  return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || [];
+};
 
 export const saveWishlist = wishlistIds => {
-    return localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlistIds));
-}
+  return localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlistIds));
+};
 
 export const addToWishlist = id => {
-    console.log('Додаємо до wishlist:', id);
-    const wishlistIds = getWishlist();
-    if(!wishlistIds.includes(id)) {
-        wishlistIds.push(id);
-        saveWishlist(wishlistIds);
-    }
-}
+  console.log('Додаємо до wishlist:', id);
+  const wishlistIds = getWishlist();
+  if (!wishlistIds.includes(id)) {
+    wishlistIds.push(id);
+    saveWishlist(wishlistIds);
+  }
+};
 
 export const removeFromWishlist = id => {
-    const updateedWishlistArray = getWishlist().filter(itemId => itemId !== id);
-     saveWishlist(updateedWishlistArray);
-}
+  const updateedWishlistArray = getWishlist().filter(itemId => itemId !== id);
+  saveWishlist(updateedWishlistArray);
+};
 
-export const isInWishlist = id => getWishlist().includes(id); 
+export const isInWishlist = id => getWishlist().includes(id);
+
+////Theme
+const THEME_KEY = 'theme';
+
+export const getTheme = () => localStorage.getItem(THEME_KEY) || 'light';
+
+export const saveTheme = theme => localStorage.setItem(THEME_KEY, theme);
+
+export const applyTheme = theme => {
+  document.documentElement.setAttribute('data-theme', theme);
+  saveTheme(theme);
+};
+
+export const toggleTheme = () => {
+  const currentTheme = getTheme();
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  applyTheme(newTheme);
+};
