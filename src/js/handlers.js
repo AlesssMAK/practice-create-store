@@ -1,12 +1,12 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import { currentProductId, updateCartBtnText, activeFirstBtn, clearProducts, updateCartCounter, updateCartSummary, updateCartTotal, updateWishlistCounter, updateWishlistBtnText, showLoadMoreButton, hideLoadMoreButton, toggleActiveClass, hideNotFoundDiv, showNotFoundDiv} from './helpers';
-import { fetchCategories, fetchProducts, fetchModal,  fetchByCategory, fetchQuery  } from './products-api';
+import { currentProductId, updateCartBtnText, activeFirstBtn, clearProducts, updateCartCounter, updateCartSummary, updateCartTotal, updateWishlistCounter, updateWishlistBtnText, showLoadMoreButton, hideLoadMoreButton, toggleActiveClass, hideNotFoundDiv, showNotFoundDiv, isWishlistPage, isCartPage} from './helpers';
+import { fetchCategories, fetchProducts, fetchModal,  fetchByCategory, fetchQuery, fetchProductsByIds  } from './products-api';
 import { renderCategories, renderProducts, renderModal } from './render-function';
 import { refs } from './refs.js';
-import { openModal } from './modal.js';
-import { addToWishlist, addToCart, isInCart, isInWishlist, removeFromCart, removeFromWishlist } from './storage.js';
+import { closeModal, openModal } from './modal.js';
+import { addToWishlist, addToCart, isInCart, isInWishlist, removeFromCart, removeFromWishlist, getWishlist, getCart } from './storage.js';
 import { ITEMS_PER_PAGE } from './constants.js';
 
 let currentPage = 1;
@@ -152,6 +152,34 @@ export const handleClearForm = () => {
   getProducts();
 };
 
+/*----------------------------Cart----------------------------*/
+
+export const loadCartProducts = async () => {
+  const cartListItems = getCart();
+
+  if (!cartListItems.length) {
+    refs.productsList.innerHTML = '';
+    showNotFoundDiv()
+    updateCartSummary([]);
+    updateCartTotal([]);
+    return;
+  };
+
+
+    const products = await fetchProductsByIds(cartListItems);
+    refs.productsList.innerHTML = '';
+    renderProducts(products);
+    updateCartSummary(products);
+    updateCartTotal(products);
+ 
+};
+
+export const closeModalCartlist = () => {
+  closeModal();
+};
+
+/*----------------------------Whishlist----------------------------*/
+
 // click add/remove to/from cart
 
 export const addProductByIdToCart = () => {
@@ -161,8 +189,14 @@ export const addProductByIdToCart = () => {
 
   if (isInCart(currentProductId)) {
     removeFromCart(currentProductId);
+    if (isCartPage()) {
+      loadCartProducts();
+    }
   } else {
     addToCart(currentProductId);
+     if (isCartPage()) {
+      loadCartProducts();
+    }
   }
 
   updateCartBtnText();
@@ -170,29 +204,21 @@ export const addProductByIdToCart = () => {
 };
 
 
-// click buyBtn
+export const LoadWishListProducts = async () => {
+  const wishlistItems = getWishlist();  
 
-export const buyBtnCart = () => {
-
-  const cartData = JSON.parse(localStorage.getItem('cart'));
-  if (!Array.isArray(cartData) || cartData.length === 0) {
-    iziToast.warning({
-      title: 'Oops!',
-      message: 'Кошик порожній. Додайте товари перед покупкою.',
-      position: 'topRight',
-    });
+  if (wishlistItems.length === 0) {
+    refs.productsList.innerHTML = '';
+    showNotFoundDiv();
     return;
   }
-  iziToast.success({
-    title: 'Success',
-    message: 'You successfully bought all products in the cart!',
-    position: 'topRight',
-  });
-  localStorage.removeItem('cart');
-  clearProducts();
-  updateCartSummary([]);
-  updateCartTotal([]);
+
+  const wishlistProducts = await fetchProductsByIds(wishlistItems);
+  refs.productsList.innerHTML = '';
+  
+  renderProducts(wishlistProducts);
 };
+
 
 //Iryna Wishlist click handler
 
@@ -201,14 +227,24 @@ export const addProductByIdToWishlist = () => {
    return;
   }  
 
-  if(isInWishlist(currentProductId)) {
+  if (isInWishlist(currentProductId)) {
     removeFromWishlist(currentProductId);
+     if (isWishlistPage()) {
+    LoadWishListProducts();
+  }
   } else {
     addToWishlist(currentProductId);
+     if (isWishlistPage()) {
+    LoadWishListProducts();
+    }
+    hideNotFoundDiv()
   }
 
   updateWishlistBtnText(currentProductId);
   updateWishlistCounter();
+
 };
 
-  
+export const closeModalWishlist = () => {
+  closeModal();
+};  

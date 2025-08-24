@@ -1,4 +1,5 @@
 import { CART_KEY, WISHLIST_KEY } from './constants';
+import { renderProducts } from './render-function';
 
 export const getCart = () => {
   return JSON.parse(localStorage.getItem(CART_KEY)) || [];
@@ -28,11 +29,16 @@ export const isInCart = id => getCart().includes(id);
 
 export const getWishlist = () => {
   // повертаємо массив ID продуктів
+  
   return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || [];
 };
 
 export const saveWishlist = wishlistIds => {
-  return localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlistIds));
+  
+  localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlistIds));
+  console.log(wishlistIds);
+  
+  return wishlistIds;
 };
 
 export const addToWishlist = id => {
@@ -47,6 +53,7 @@ export const addToWishlist = id => {
 export const removeFromWishlist = id => {
   const updateedWishlistArray = getWishlist().filter(itemId => itemId !== id);
   saveWishlist(updateedWishlistArray);
+  
 };
 
 export const isInWishlist = id => getWishlist().includes(id);
