@@ -45,22 +45,9 @@ const loadCartProducts = async () => {
   }
 };
 
-const handleBackdropClick = event => {
-  if (event.target === refs.modal) {
-    loadCartProducts();
-    refs.modal.removeEventListener('click', handleBackdropClick);
-  }
-};
-
 const closeModalCartlist = () => {
   closeModal();
   loadCartProducts();
-  refs.modal.removeEventListener('click', handleBackdropClick);
-};
-
-const handleCartItemClick = async event => {
-  refs.modal.addEventListener('click', handleBackdropClick);
-  handleProductsListItemClick(event);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -72,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   if (refs.productsList) {
-    refs.productsList.addEventListener('click', handleCartItemClick);
+    refs.productsList.addEventListener('click', handleProductsListItemClick);
   }
   refs.modalCloseBtn.addEventListener('click', closeModalCartlist);
   refs.addToCartBtn.addEventListener('click', addProductByIdToCart);
