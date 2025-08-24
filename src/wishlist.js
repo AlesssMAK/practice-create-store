@@ -35,15 +35,30 @@ const LoadWishListProducts = async () => {
   refs.productsList.innerHTML = '';
   renderProducts(wishlistProducts);
 };
+
+const handleBackdropClick = event => {
+  if (event.target === refs.modal) {
+    LoadWishListProducts();
+    refs.modal.removeEventListener('click', handleBackdropClick);
+  }
+};
+
 const closeModalWishlist = () => {
   closeModal();
   LoadWishListProducts();
+  refs.modal.removeEventListener('click', handleBackdropClick);
+};
+
+const handleWishlistItemClick = async event => {
+  refs.modal.addEventListener('click', handleBackdropClick);
+  handleProductsListItemClick(event);
 };
 
 LoadWishListProducts();
-refs.productsList.addEventListener('click', handleProductsListItemClick);
+refs.productsList.addEventListener('click', handleWishlistItemClick);
 refs.modalCloseBtn.addEventListener('click', closeModalWishlist);
 refs.addToCartBtn.addEventListener('click', addProductByIdToCart);
 refs.addToWishlistBtn.addEventListener('click', addProductByIdToWishlist);
+
 updateWishlistCounter();
 updateCartCounter();
