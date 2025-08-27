@@ -16,6 +16,8 @@ const themeToggleBtn = document.querySelector('.theme-toggle-btn');
 if (themeToggleBtn) {
   themeToggleBtn.addEventListener('click', toggleTheme);
 }
+const searchForm = document.querySelector('.search-form');
+searchForm.remove();
 
 updateCartCounter();
 updateWishlistCounter();
