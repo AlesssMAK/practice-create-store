@@ -7,7 +7,7 @@ import {
   loadCartProducts,
   closeModalCartlist,
 } from './js/handlers';
-import {updateCartCounter, updateWishlistCounter} from './js/helpers';
+import { updateCartCounter, updateWishlistCounter } from './js/helpers';
 import { refs } from './js/refs';
 import { getTheme, applyTheme, toggleTheme } from './js/storage';
 
@@ -16,8 +16,6 @@ const themeToggleBtn = document.querySelector('.theme-toggle-btn');
 if (themeToggleBtn) {
   themeToggleBtn.addEventListener('click', toggleTheme);
 }
-
-
 
 updateCartCounter();
 updateWishlistCounter();
@@ -30,5 +28,3 @@ document.addEventListener('DOMContentLoaded', () => {
   refs.addToCartBtn.addEventListener('click', addProductByIdToCart);
   refs.addToWishlistBtn.addEventListener('click', addProductByIdToWishlist);
 });
-
-
