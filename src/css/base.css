@@ -24,7 +24,7 @@ body {
 }
 
 /* Стили для кнопки переключения */
-.theme-toggle-btn {
+/* .theme-toggle-btn {
   width: 40px;
   height: 40px;
   border: none;
@@ -37,23 +37,23 @@ body {
   justify-content: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background 0.3s, color 0.3s, transform 0.2s;
-}
-@media (max-width: 768px) {
+} */
+/* @media (max-width: 768px) {
   .theme-toggle-btn {
-    order: 3; /* кнопка после меню */
+    order: 3; 
     width: 100%;
     display: flex;
     justify-content: center;
     margin-top: 5px;
   }
-}
-@media (min-width: 1200px) {
+} */
+/* @media (min-width: 1200px) {
   .theme-toggle-btn {
     order: 1;
     margin-left: 20px;
     display: inline-flex;
   }
-}
+} */
 
 theme-toggle-btn:hover {
   transform: scale(1.1);
