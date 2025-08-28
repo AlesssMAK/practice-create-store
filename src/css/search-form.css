@@ -18,7 +18,7 @@
   }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1200px) {
   .search-form {
     width: 300px;
 
@@ -48,8 +48,15 @@
   }
 
   &::placeholder {
+    font-size: 14px;
     color: #6c757d;
     opacity: 0.8;
+  }
+}
+
+@media (min-width: 1200px) {
+  .search-form__input::placeholder {
+    font-size: 16px;
   }
 }
 

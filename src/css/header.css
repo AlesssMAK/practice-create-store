@@ -96,17 +96,19 @@
     justify-content: space-between;
   }
   .nav {
-    margin-right: 15px;
+    margin-right: 40px;
   }
 
   .logo {
     align-self: auto;
     align-items: center;
     justify-content: center;
+    padding-top: 11px;
+    padding-bottom: 11px;
   }
 }
 @media (min-width: 1200px) {
   .nav {
-    margin-right: 0px;
+    margin-right: 25px;
   }
 }
