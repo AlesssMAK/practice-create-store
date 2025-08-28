@@ -2,8 +2,7 @@
   position: relative;
 
   display: flex;
-  width: 100%;
-  max-width: 100%;
+  width: 280px;
 
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
@@ -15,7 +14,18 @@
 
   &:has(input:focus),
   &:has(input:not(:placeholder-shown)) {
-    width: 500px;
+    width: 288px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .search-form {
+    width: 300px;
+
+    &:has(input:focus),
+    &:has(input:not(:placeholder-shown)) {
+      width: 500px;
+    }
   }
 }
 
