@@ -53,15 +53,6 @@
   }
 }
 
-/* @media (min-width: 1200px) {
-  .theme-toggle-btn {
-    top: 31px;
-    right: 0px;
-    width: 30px;
-    height: 30px;
-  }
-} */
-
 .theme-toggle-btn:hover {
   background-color: rgba(255, 107, 10, 0.1);
 }
