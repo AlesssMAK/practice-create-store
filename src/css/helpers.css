@@ -31,9 +31,9 @@
 .theme-toggle-btn {
   position: absolute;
   top: 20px;
-  right: 16px;
-  width: 30px;
-  height: 30px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
   background-color: transparent;
   border: 2px solid #ff6b0a;
   border-radius: 50%;
@@ -44,24 +44,6 @@
   align-items: center;
   z-index: 10;
   transition: background-color 0.3s;
-}
-
-@media (min-width: 768px) {
-  .theme-toggle-btn {
-    top: 31px;
-    right: 0px;
-    width: 27px;
-    height: 27px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .theme-toggle-btn {
-    top: 31px;
-    right: 0px;
-    width: 30px;
-    height: 30px;
-  }
 }
 
 .theme-toggle-btn:hover {

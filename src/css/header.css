@@ -8,24 +8,50 @@
 }
 .header__container {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* ✅ разрешаем перенос строк */
+  gap: 10px; /* ✅ расстояние между элементами */
 }
 
 .logo {
-  display: flex;
-  align-self: flex-start;
+  margin-top: 10px;
 }
 
+.logo-search {
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  margin: 0 auto;
+}
 .nav__list {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 40px;
+  margin-top: 10px;
 }
 
-.nav__item {
+@media only screen and (min-width: 768px) {
+  .nav__list {
+    order: 0;
+    width: auto;
+    justify-content: flex-end;
+    margin-top: 0;
+  }
+}
+@media (min-width: 1200px) {
+  .nav__list {
+    order: 0;
+    width: auto;
+    justify-content: flex-end;
+    margin-top: 0;
+  }
+}
+
+nav__item {
   cursor: pointer;
 }
 .nav__link {
@@ -86,27 +112,5 @@
   .nav__link.nav__link--active & {
     background: #ff6b0a;
     color: #fff;
-  }
-}
-
-@media (min-width: 768px) {
-  .header__container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  .nav {
-    margin-right: 15px;
-  }
-
-  .logo {
-    align-self: auto;
-    align-items: center;
-    justify-content: center;
-  }
-}
-@media (min-width: 1200px) {
-  .nav {
-    margin-right: 0px;
   }
 }

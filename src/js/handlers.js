@@ -1,59 +1,23 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import {
-  currentProductId,
-  updateCartBtnText,
-  activeFirstBtn,
-  clearProducts,
-  updateCartCounter,
-  updateCartSummary,
-  updateCartTotal,
-  updateWishlistCounter,
-  updateWishlistBtnText,
-  showLoadMoreButton,
-  hideLoadMoreButton,
-  toggleActiveClass,
-  hideNotFoundDiv,
-  showNotFoundDiv,
-  isWishlistPage,
-  isCartPage,
-} from './helpers';
-import {
-  fetchCategories,
-  fetchProducts,
-  fetchModal,
-  fetchByCategory,
-  fetchQuery,
-  fetchProductsByIds,
-} from './products-api';
-import {
-  renderCategories,
-  renderProducts,
-  renderModal,
-} from './render-function';
+import { currentProductId, updateCartBtnText, activeFirstBtn, clearProducts, updateCartCounter, updateCartSummary, updateCartTotal, updateWishlistCounter, updateWishlistBtnText, showLoadMoreButton, hideLoadMoreButton, toggleActiveClass, hideNotFoundDiv, showNotFoundDiv, isWishlistPage, isCartPage} from './helpers';
+import { fetchCategories, fetchProducts, fetchModal,  fetchByCategory, fetchQuery, fetchProductsByIds  } from './products-api';
+import { renderCategories, renderProducts, renderModal } from './render-function';
 import { refs } from './refs.js';
 import { closeModal, openModal } from './modal.js';
-import {
-  addToWishlist,
-  addToCart,
-  isInCart,
-  isInWishlist,
-  removeFromCart,
-  removeFromWishlist,
-  getWishlist,
-  getCart,
-} from './storage.js';
+import { addToWishlist, addToCart, isInCart, isInWishlist, removeFromCart, removeFromWishlist, getWishlist, getCart } from './storage.js';
 import { ITEMS_PER_PAGE } from './constants.js';
 
 let currentPage = 1;
-let currentSearchQuery = '';
+let currentSearchQuery = "";
 let selectedCategory = 'All';
+
 
 export const getCategories = async () => {
   try {
     const data = await fetchCategories();
-
+    
     renderCategories(data);
 
     activeFirstBtn();
@@ -74,11 +38,12 @@ export const getProducts = async () => {
     if (currentPage >= totalPages) {
       iziToast.info({
         message: "We're sorry, but you've reached the end.",
-        position: 'topRight',
+        position: "topRight",
       });
     } else {
       showLoadMoreButton();
-    }
+    };
+
   } catch (error) {
     console.log(error);
   }
@@ -97,20 +62,22 @@ export const handleLoadMoreClick = async () => {
     if (currentPage < totalPages) {
       showLoadMoreButton();
     }
+
   } catch (error) {
     console.log(error);
   }
 };
 
 // Модальне вікно
-export const handleProductsListItemClick = async event => {
-  const card = event.target.closest('.products__item');
-  const cardId = card.dataset.id;
-
+export const handleProductsListItemClick = async (event) => {
+  const card = event.target.closest(".products__item");
+  const cardId = card.dataset.id;  
+  
   try {
     const data = await fetchModal(cardId);
     openModal(cardId);
     renderModal(data);
+
   } catch (error) {
     console.log(error);
   }
@@ -127,53 +94,54 @@ export const handleCategoryClick = async e => {
   try {
     const currentCategory = e.target.textContent;
     selectedCategory = currentCategory;
-    const allCategoryBtn = document.querySelectorAll('.categories__btn');
-    toggleActiveClass(allCategoryBtn, e.target, 'categories__btn--active');
+    const allCategoryBtn = document.querySelectorAll(".categories__btn");
+    toggleActiveClass(allCategoryBtn, e.target, "categories__btn--active");
     let productsData;
-    if (currentCategory === 'All') {
+    if (currentCategory === "All") {
       currentPage = 1;
       productsData = await fetchProducts(currentPage);
       showLoadMoreButton();
     } else {
       productsData = await fetchByCategory(currentCategory);
-    }
+    };
 
     if (productsData.products.length > 0) {
       renderProducts(productsData.products);
       hideLoadMoreButton();
 
-      if (currentCategory === 'All') {
+    if (currentCategory === 'All') {
         const totalPages = Math.ceil(productsData.total / ITEMS_PER_PAGE);
         if (currentPage < totalPages) showLoadMoreButton();
       }
     } else {
       showNotFoundDiv();
-    }
+  }
   } catch (error) {
     console.log(error);
   }
 };
 
+
 // пошук продуктів за ключовим словом - Олексій
-export const handleProductsByQuery = async event => {
+export const handleProductsByQuery = async (event) => { 
   event.preventDefault();
   const query = event.target.elements.searchValue.value.trim();
-
+  
   if (!query) return;
   clearProducts();
   hideLoadMoreButton();
-  try {
+try {
     const { products } = await fetchQuery(query);
-
+    
     if (products.length === 0) {
       showNotFoundDiv();
     } else {
       renderProducts(products);
       hideNotFoundDiv();
-    }
+    };    
   } catch (error) {
-    console.log(error);
-  }
+console.log(error);
+}
 };
 
 // очищення форми - Олексій
@@ -191,18 +159,19 @@ export const loadCartProducts = async () => {
 
   if (!cartListItems.length) {
     refs.productsList.innerHTML = '';
-    showNotFoundDiv();
+    showNotFoundDiv()
     updateCartSummary([]);
     updateCartTotal([]);
     return;
-  }
+  };
 
-  const products = await fetchProductsByIds(cartListItems);
-  refs.productsList.innerHTML = '';
-  renderProducts(products);
-  updateCartSummary(products);
-  updateCartTotal(products);
-  hideNotFoundDiv();
+
+    const products = await fetchProductsByIds(cartListItems);
+    refs.productsList.innerHTML = '';
+    renderProducts(products);
+    updateCartSummary(products);
+    updateCartTotal(products);
+ 
 };
 
 export const closeModalCartlist = () => {
@@ -225,7 +194,7 @@ export const addProductByIdToCart = () => {
     }
   } else {
     addToCart(currentProductId);
-    if (isCartPage()) {
+     if (isCartPage()) {
       loadCartProducts();
     }
   }
@@ -234,8 +203,9 @@ export const addProductByIdToCart = () => {
   updateCartCounter();
 };
 
+
 export const LoadWishListProducts = async () => {
-  const wishlistItems = getWishlist();
+  const wishlistItems = getWishlist();  
 
   if (wishlistItems.length === 0) {
     refs.productsList.innerHTML = '';
@@ -245,34 +215,36 @@ export const LoadWishListProducts = async () => {
 
   const wishlistProducts = await fetchProductsByIds(wishlistItems);
   refs.productsList.innerHTML = '';
-
+  
   renderProducts(wishlistProducts);
 };
+
 
 //Iryna Wishlist click handler
 
 export const addProductByIdToWishlist = () => {
-  if (currentProductId === null) {
-    return;
-  }
+  if(currentProductId === null) {
+   return;
+  }  
 
   if (isInWishlist(currentProductId)) {
     removeFromWishlist(currentProductId);
-    if (isWishlistPage()) {
-      LoadWishListProducts();
-    }
+     if (isWishlistPage()) {
+    LoadWishListProducts();
+  }
   } else {
     addToWishlist(currentProductId);
-    if (isWishlistPage()) {
-      LoadWishListProducts();
+     if (isWishlistPage()) {
+    LoadWishListProducts();
     }
-    hideNotFoundDiv();
+    hideNotFoundDiv()
   }
 
   updateWishlistBtnText(currentProductId);
   updateWishlistCounter();
+
 };
 
 export const closeModalWishlist = () => {
   closeModal();
-};
+};  
