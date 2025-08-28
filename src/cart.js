@@ -1,5 +1,6 @@
 //Логіка сторінки Cart
-
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 import {
   handleProductsListItemClick,
   addProductByIdToCart,
@@ -7,15 +8,32 @@ import {
   loadCartProducts,
   closeModalCartlist,
 } from './js/handlers';
-import { updateCartCounter, updateWishlistCounter } from './js/helpers';
+import {
+  updateCartCounter,
+  updateWishlistCounter,
+  clearProducts,
+  updateCartSummary,
+  updateCartTotal,
+} from './js/helpers';
 import { refs } from './js/refs';
-import { getTheme, applyTheme, toggleTheme } from './js/storage';
+import {
+  getTheme,
+  applyTheme,
+  toggleTheme,
+  addToCart,
+  isInCart,
+  getCart,
+  saveCart,
+  removeFromCart,
+} from './js/storage';
 
 applyTheme(getTheme());
 const themeToggleBtn = document.querySelector('.theme-toggle-btn');
 if (themeToggleBtn) {
   themeToggleBtn.addEventListener('click', toggleTheme);
 }
+const searchForm = document.querySelector('.search-form');
+searchForm.remove();
 
 updateCartCounter();
 updateWishlistCounter();
@@ -27,4 +45,33 @@ document.addEventListener('DOMContentLoaded', () => {
   refs.modalCloseBtn.addEventListener('click', closeModalCartlist);
   refs.addToCartBtn.addEventListener('click', addProductByIdToCart);
   refs.addToWishlistBtn.addEventListener('click', addProductByIdToWishlist);
+});
+
+///
+const buyButton = document.querySelector('.cart-summary__btn');
+
+buyButton.addEventListener('click', () => {
+  const cart = getCart();
+
+  if (cart.length === 0) {
+    iziToast.warning({
+      title: 'Oops!',
+      message: 'Кошик порожній. Додайте товари перед покупкою.',
+      position: 'topRight',
+    });
+    return;
+  }
+
+  iziToast.success({
+    title: 'Success',
+    message: 'You successfully bought all products in the cart!',
+    position: 'topRight',
+  });
+  //localStorage.removeItem('cart');
+  saveCart([]);
+  clearProducts();
+  updateCartSummary([]);
+  updateCartTotal([]);
+  updateCartCounter();
+  return;
 });

@@ -1,11 +1,7 @@
 //Логіка сторінки Wishlist
 import { updateWishlistCounter, updateCartCounter } from './js/helpers';
 import { refs } from './js/refs';
-import {
-  getTheme,
-  applyTheme,
-  toggleTheme,
-} from './js/storage';
+import { getTheme, applyTheme, toggleTheme } from './js/storage';
 import {
   handleProductsListItemClick,
   addProductByIdToWishlist,
@@ -14,14 +10,14 @@ import {
   handleProductsByQuery,
   closeModalWishlist,
 } from './js/handlers';
+const searchForm = document.querySelector('.search-form');
+searchForm.remove();
 
 applyTheme(getTheme());
 const themeToggleBtn = document.querySelector('.theme-toggle-btn');
 if (themeToggleBtn) {
   themeToggleBtn.addEventListener('click', toggleTheme);
 }
-
-
 
 LoadWishListProducts();
 
