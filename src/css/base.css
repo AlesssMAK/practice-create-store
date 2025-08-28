@@ -23,38 +23,6 @@ body {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
 }
 
-/* Стили для кнопки переключения */
-/* .theme-toggle-btn {
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  background: var(--card-bg-color);
-  color: var(--primary-text-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s, color 0.3s, transform 0.2s;
-} */
-/* @media (max-width: 768px) {
-  .theme-toggle-btn {
-    order: 3; 
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 5px;
-  }
-} */
-/* @media (min-width: 1200px) {
-  .theme-toggle-btn {
-    order: 1;
-    margin-left: 20px;
-    display: inline-flex;
-  }
-} */
-
 theme-toggle-btn:hover {
   transform: scale(1.1);
 }
