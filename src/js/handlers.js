@@ -192,6 +192,7 @@ export const handleProductsByQuery = async event => {
     console.log(error);
   } finally {
     hideLoader();
+    clearActiveCategoryBtn();
   }
 };
 

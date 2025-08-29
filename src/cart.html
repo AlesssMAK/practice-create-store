@@ -17,6 +17,10 @@
       <div class="container product-page">
         <main>
           <ul class="products"></ul>
+          <div id="loader" class="loader hidden" aria-label="Loading...">
+            <div class="spinner"></div>
+            <p class="loader-text">Loading page…</p>
+          </div>
           <div class="not-found">
             <div class="not-found__icon">
               <svg
@@ -39,10 +43,6 @@
               We couldn't find any items matching your search.<br />Please try
               different keywords.
             </p>
-          </div>
-          <div id="loader" class="loader hidden" aria-label="Loading...">
-            <div class="spinner"></div>
-            <p class="loader-text">Loading page…</p>
           </div>
           <button class="scroll-top-btn" aria-label="Scroll to top">
             &#8679;

@@ -132,9 +132,7 @@
 }
 
 .loader.hidden {
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
+  display: none;
 }
 
 .spinner {
@@ -144,6 +142,7 @@
   border-top-color: var(--accent-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  margin-top: 15px;
   margin-bottom: 15px;
 }
 
