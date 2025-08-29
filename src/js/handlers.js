@@ -18,6 +18,8 @@ import {
   showNotFoundDiv,
   isWishlistPage,
   isCartPage,
+  hideLoader,
+  showLoader,
 } from './helpers';
 import {
   fetchCategories,
@@ -47,11 +49,11 @@ import {
 import { ITEMS_PER_PAGE } from './constants.js';
 
 let currentPage = 1;
-let currentSearchQuery = '';
 let selectedCategory = 'All';
 
 export const getCategories = async () => {
   try {
+    showLoader();
     const data = await fetchCategories();
 
     renderCategories(data);
@@ -59,11 +61,14 @@ export const getCategories = async () => {
     activeFirstBtn();
   } catch (error) {
     console.log(error);
+  } finally {
+    hideLoader();
   }
 };
 
 export const getProducts = async () => {
   try {
+    showLoader();
     currentPage = 1;
     const { products, total } = await fetchProducts(currentPage);
 
@@ -81,12 +86,15 @@ export const getProducts = async () => {
     }
   } catch (error) {
     console.log(error);
+  } finally {
+    hideLoader();
   }
 };
 
 export const handleLoadMoreClick = async () => {
   if (selectedCategory !== 'All') return;
   currentPage++;
+  showLoader();
   hideLoadMoreButton();
 
   try {
@@ -99,6 +107,8 @@ export const handleLoadMoreClick = async () => {
     }
   } catch (error) {
     console.log(error);
+  } finally {
+    hideLoader();
   }
 };
 
@@ -113,6 +123,8 @@ export const handleProductsListItemClick = async event => {
     renderModal(data);
   } catch (error) {
     console.log(error);
+  } finally {
+    hideLoader();
   }
 };
 
@@ -120,6 +132,7 @@ export const handleProductsListItemClick = async event => {
 export const handleCategoryClick = async e => {
   if (!e.target.classList.contains('categories__btn')) return;
 
+  showLoader();
   hideLoadMoreButton();
   clearProducts();
   currentPage = 1;
@@ -151,6 +164,8 @@ export const handleCategoryClick = async e => {
     }
   } catch (error) {
     console.log(error);
+  } finally {
+    hideLoader();
   }
 };
 
@@ -173,6 +188,8 @@ export const handleProductsByQuery = async event => {
     }
   } catch (error) {
     console.log(error);
+  } finally {
+    hideLoader();
   }
 };
 
@@ -196,13 +213,15 @@ export const loadCartProducts = async () => {
     updateCartTotal([]);
     return;
   }
-
+  showLoader();
   const products = await fetchProductsByIds(cartListItems);
+
   refs.productsList.innerHTML = '';
   renderProducts(products);
   updateCartSummary(products);
   updateCartTotal(products);
   hideNotFoundDiv();
+  hideLoader();
 };
 
 export const closeModalCartlist = () => {
@@ -229,7 +248,7 @@ export const addProductByIdToCart = () => {
       loadCartProducts();
     }
   }
-
+  hideLoader();
   updateCartBtnText();
   updateCartCounter();
 };
@@ -238,15 +257,17 @@ export const LoadWishListProducts = async () => {
   const wishlistItems = getWishlist();
 
   if (wishlistItems.length === 0) {
+    hideLoader();
     refs.productsList.innerHTML = '';
     showNotFoundDiv();
     return;
   }
 
+  showLoader();
   const wishlistProducts = await fetchProductsByIds(wishlistItems);
   refs.productsList.innerHTML = '';
-
   renderProducts(wishlistProducts);
+  hideLoader();
 };
 
 //Iryna Wishlist click handler
@@ -268,7 +289,7 @@ export const addProductByIdToWishlist = () => {
     }
     hideNotFoundDiv();
   }
-
+  hideLoader();
   updateWishlistBtnText(currentProductId);
   updateWishlistCounter();
 };

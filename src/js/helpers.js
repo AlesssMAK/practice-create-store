@@ -99,3 +99,21 @@ export const showNotFoundDiv = () => {
 export const hideNotFoundDiv = () => {
   refs.notFoundDiv.classList.remove('not-found--visible');
 };
+
+export const toggleScrollButton = () => {
+  const productsTop = refs.productsList.getBoundingClientRect().top;
+
+  if (productsTop < 0) {
+    refs.scrollBtn.classList.add('scroll-top-btn--visible');
+  } else {
+    refs.scrollBtn.classList.remove('scroll-top-btn--visible');
+  }
+};
+
+export const showLoader = () => {
+  if (loader) loader.classList.remove('hidden');
+};
+
+export const hideLoader = () => {
+  if (loader) loader.classList.add('hidden');
+};

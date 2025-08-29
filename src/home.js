@@ -11,7 +11,11 @@ import {
 } from './js/handlers';
 import { closeModal } from './js/modal';
 import { refs } from './js/refs';
-import { updateWishlistCounter, updateCartCounter } from './js/helpers';
+import {
+  updateWishlistCounter,
+  updateCartCounter,
+  toggleScrollButton,
+} from './js/helpers';
 import { getTheme, applyTheme, toggleTheme } from './js/storage';
 
 //Логіка сторінки Home
@@ -28,6 +32,12 @@ refs.form.addEventListener('submit', handleProductsByQuery);
 refs.formBtnClear.addEventListener('click', handleClearForm);
 refs.addToCartBtn.addEventListener('click', addProductByIdToCart);
 refs.addToWishlistBtn.addEventListener('click', addProductByIdToWishlist);
+window.addEventListener('scroll', toggleScrollButton);
 
 const themeToggleBtn = document.querySelector('.theme-toggle-btn');
 themeToggleBtn.addEventListener('click', toggleTheme);
+
+refs.scrollBtn.addEventListener('click', e => {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
