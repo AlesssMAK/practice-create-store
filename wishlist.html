@@ -11,9 +11,9 @@
     />
     <script type="module" crossorigin src="/practice-create-store/wishlist.js"></script>
     <link rel="modulepreload" crossorigin href="/practice-create-store/assets/vendor-4yCzdkXl.js">
-    <link rel="modulepreload" crossorigin href="/practice-create-store/assets/handlers-u-axA6kc.js">
+    <link rel="modulepreload" crossorigin href="/practice-create-store/assets/handlers-hOIqK37v.js">
     <link rel="stylesheet" crossorigin href="/practice-create-store/assets/vendor-DnveWo0P.css">
-    <link rel="stylesheet" crossorigin href="/practice-create-store/assets/handlers-DfgCj1M4.css">
+    <link rel="stylesheet" crossorigin href="/practice-create-store/assets/handlers-CwxOL9Jk.css">
   </head>
   <body>
     <header class="header">
@@ -74,6 +74,10 @@
       <section class="section">
         <div class="container">
           <ul class="products"></ul>
+          <div id="loader" class="loader hidden" aria-label="Loading...">
+            <div class="spinner"></div>
+            <p class="loader-text">Loading page…</p>
+          </div>
           <div class="not-found">
             <div class="not-found__icon">
               <svg
@@ -96,10 +100,6 @@
               We couldn't find any items matching your search.<br />Please try
               different keywords.
             </p>
-          </div>
-          <div id="loader" class="loader hidden" aria-label="Loading...">
-            <div class="spinner"></div>
-            <p class="loader-text">Loading page…</p>
           </div>
           <button class="scroll-top-btn" aria-label="Scroll to top">
             &#8679;
