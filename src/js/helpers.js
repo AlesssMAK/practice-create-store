@@ -33,6 +33,11 @@ export const toggleActiveClass = (elements, activeElement, activeClass) => {
   activeElement.classList.add(activeClass);
 };
 
+export const clearActiveCategoryBtn = () => {
+  const CategoryBtns = document.querySelectorAll('.categories__btn');
+  CategoryBtns.forEach(btn => btn.classList.remove('categories__btn--active'));
+};
+
 export const clearProducts = () => {
   refs.productsList.innerHTML = '';
 };

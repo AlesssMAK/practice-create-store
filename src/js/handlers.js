@@ -20,6 +20,7 @@ import {
   isCartPage,
   hideLoader,
   showLoader,
+  clearActiveCategoryBtn,
 } from './helpers';
 import {
   fetchCategories,
@@ -153,6 +154,7 @@ export const handleCategoryClick = async e => {
     if (productsData.products.length > 0) {
       renderProducts(productsData.products);
       hideLoadMoreButton();
+      hideNotFoundDiv();
 
       if (currentCategory === 'All') {
         const totalPages = Math.ceil(productsData.total / ITEMS_PER_PAGE);
@@ -177,6 +179,7 @@ export const handleProductsByQuery = async event => {
   clearProducts();
   hideLoadMoreButton();
   try {
+    showLoader();
     const { products } = await fetchQuery(query);
 
     if (products.length === 0) {
@@ -197,6 +200,9 @@ export const handleClearForm = () => {
   clearProducts();
   hideNotFoundDiv();
   refs.form.reset();
+  hideLoadMoreButton();
+  clearActiveCategoryBtn();
+  activeFirstBtn();
   getProducts();
 };
 
