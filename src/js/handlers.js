@@ -92,7 +92,6 @@ export const getProducts = async () => {
 };
 
 export const handleLoadMoreClick = async () => {
-  if (selectedCategory !== 'All') return;
   currentPage++;
   showLoader();
   hideLoadMoreButton();
