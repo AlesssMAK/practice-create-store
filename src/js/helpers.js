@@ -1,5 +1,12 @@
 import { refs } from './refs';
-import { getCart, getWishlist, isInWishlist, isInCart } from './storage';
+import {
+  getCart,
+  getWishlist,
+  isInWishlist,
+  isInCart,
+  applyTheme,
+  getTheme,
+} from './storage';
 
 export let currentProductId = null;
 
@@ -99,10 +106,12 @@ export const hideLoadMoreButton = () => {
 
 export const showNotFoundDiv = () => {
   refs.notFoundDiv.classList.add('not-found--visible');
+  applyTheme(getTheme()); // застосувати поточну тему
 };
 
 export const hideNotFoundDiv = () => {
   refs.notFoundDiv.classList.remove('not-found--visible');
+  applyTheme(getTheme()); // застосувати поточну тему (якщо треба)
 };
 
 export const toggleScrollButton = () => {

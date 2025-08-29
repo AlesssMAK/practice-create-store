@@ -6,13 +6,13 @@
 
   text-align: center;
 
-  color: var(--primary-text-color);
+  color: #2d3748;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   animation: fadeInUp 0.4s ease-out;
   cursor: pointer;
-  transition: color 0.3s;
+  transition: color 0.3s, background 0.3s;
 
   &.not-found--visible {
     display: block;
@@ -31,7 +31,6 @@
 
 .not-found__title {
   margin: 0 0 1rem;
-
   color: #ff6b0a;
   font-size: 1.75rem;
   font-weight: 600;
@@ -39,8 +38,22 @@
 
 .not-found__description {
   margin: 0;
-
   color: #4a5568;
   line-height: 1.6;
   font-size: 1rem;
+}
+
+/* 🌙 Темна тема  */
+[data-theme='dark'] .not-found {
+  color: var(--primary-text-color);
+  background-color: var(--card-bg-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='dark'] .not-found__title {
+  color: var(--primary-text-color);
+}
+
+[data-theme='dark'] .not-found__description {
+  color: var(--primary-text-color);
 }
