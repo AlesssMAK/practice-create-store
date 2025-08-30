@@ -329,7 +329,7 @@ export const addProductByIdToCart = () => {
     removeFromCart(currentProductId);
     iziToast.warning({
       title: '!',
-      message: 'Товар усунуто з кошика',
+      message: 'Product successfully removed from cart',
       position: 'topRight',
     });
     if (isCartPage()) {
@@ -339,7 +339,7 @@ export const addProductByIdToCart = () => {
     addToCart(currentProductId);
     iziToast.success({
       title: 'Success',
-      message: 'Товар додано у кошик!',
+      message: 'Product successfully added to cart!',
       position: 'topRight',
     });
     if (isCartPage()) {
@@ -379,7 +379,7 @@ export const addProductByIdToWishlist = () => {
     removeFromWishlist(currentProductId);
     iziToast.warning({
       title: '!',
-      message: 'Товар усунуто зі списку бажань',
+      message: 'Product successfully removed from wishlist',
       position: 'topRight',
     });
     if (isWishlistPage()) {
@@ -389,7 +389,7 @@ export const addProductByIdToWishlist = () => {
     addToWishlist(currentProductId);
     iziToast.success({
       title: 'Success',
-      message: 'Товар додано у список бажань!',
+      message: 'Product successfully added to wishlist!',
       position: 'topRight',
     });
     if (isWishlistPage()) {
