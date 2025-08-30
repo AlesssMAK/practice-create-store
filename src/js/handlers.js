@@ -245,11 +245,21 @@ export const addProductByIdToCart = () => {
 
   if (isInCart(currentProductId)) {
     removeFromCart(currentProductId);
+    iziToast.warning({
+      title: '!',
+      message: 'Товар усунуто з кошика',
+      position: 'topRight',
+    });
     if (isCartPage()) {
       loadCartProducts();
     }
   } else {
     addToCart(currentProductId);
+    iziToast.success({
+      title: 'Success',
+      message: 'Товар додано у кошик!',
+      position: 'topRight',
+    });
     if (isCartPage()) {
       loadCartProducts();
     }
@@ -285,11 +295,21 @@ export const addProductByIdToWishlist = () => {
 
   if (isInWishlist(currentProductId)) {
     removeFromWishlist(currentProductId);
+    iziToast.warning({
+      title: '!',
+      message: 'Товар усунуто зі списку бажань',
+      position: 'topRight',
+    });
     if (isWishlistPage()) {
       LoadWishListProducts();
     }
   } else {
     addToWishlist(currentProductId);
+    iziToast.success({
+      title: 'Success',
+      message: 'Товар додано у список бажань!',
+      position: 'topRight',
+    });
     if (isWishlistPage()) {
       LoadWishListProducts();
     }
