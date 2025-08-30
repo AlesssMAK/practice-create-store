@@ -16,8 +16,11 @@ export const fetchProducts = async page => {
   return data;
 };
 
-export const fetchByCategory = async category => {
-  const { data } = await axios(`${ENDPOINTS.PRODUCTS_BY_CATEGORY}/${category}`);
+export const fetchByCategory = async (category, page) => {
+  const skip = (page - 1) * ITEMS_PER_PAGE;
+  const { data } = await axios(
+    `${ENDPOINTS.PRODUCTS_BY_CATEGORY}/${category}?limit=${ITEMS_PER_PAGE}&skip=${skip}`
+  );
   return data;
 };
 
@@ -37,12 +40,20 @@ export const fetchProductsByIds = async Ids => {
     );
     return filteredProducts;
   } catch (error) {
-    console.error('Error fetching products:', error);
+    iziToast.error({
+      title: 'error',
+      message: 'No response from server. Please try again.',
+      position: 'topRight',
+    });
     return [];
   }
 };
 
-export const fetchQuery = async query => {
-  const { data } = await axios(`${ENDPOINTS.PRODUCTS_BY_QUERY}?q=${query}`);
+export const fetchQuery = async (query, page) => {
+  const skip = (page - 1) * ITEMS_PER_PAGE;
+  const { data } = await axios(
+    `${ENDPOINTS.PRODUCTS_BY_QUERY}?q=${query}&limit=${ITEMS_PER_PAGE}&skip=${skip}`
+  );
+
   return data;
 };

@@ -21,6 +21,7 @@ import {
   hideLoader,
   showLoader,
   clearActiveCategoryBtn,
+  hasMore,
 } from './helpers';
 import {
   fetchCategories,
@@ -51,6 +52,7 @@ import { ITEMS_PER_PAGE } from './constants.js';
 
 let currentPage = 1;
 let selectedCategory = 'All';
+let currentSearchQuery = '';
 
 export const getCategories = async () => {
   try {
@@ -61,7 +63,11 @@ export const getCategories = async () => {
 
     activeFirstBtn();
   } catch (error) {
-    console.log(error);
+    iziToast.error({
+      title: 'error',
+      message: 'No response from server. Please try again.',
+      position: 'topRight',
+    });
   } finally {
     hideLoader();
   }
@@ -86,7 +92,12 @@ export const getProducts = async () => {
       showLoadMoreButton();
     }
   } catch (error) {
-    console.log(error);
+    showNotFoundDiv();
+    iziToast.error({
+      title: 'error',
+      message: 'No response from server. Please try again.',
+      position: 'topRight',
+    });
   } finally {
     hideLoader();
   }
@@ -98,15 +109,39 @@ export const handleLoadMoreClick = async () => {
   hideLoadMoreButton();
 
   try {
-    const { products, total } = await fetchProducts(currentPage);
-    renderProducts(products);
+    let data;
 
-    const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
-    if (currentPage < totalPages) {
-      showLoadMoreButton();
+    if (currentSearchQuery) {
+      data = await fetchQuery(currentSearchQuery, currentPage);
+    } else if (selectedCategory !== 'All') {
+      data = await fetchByCategory(selectedCategory, currentPage);
+    } else {
+      data = await fetchProducts(currentPage);
+    }
+
+    const { products = [], total } = data || {};
+
+    if (products.length) {
+      renderProducts(products);
+
+      if (hasMore(total, products, currentPage, ITEMS_PER_PAGE)) {
+        showLoadMoreButton();
+      } else {
+        hideLoadMoreButton();
+        if (currentPage > 1) {
+          iziToast.info({
+            message: 'All items have been loaded.',
+            position: 'topRight',
+          });
+        }
+      }
     }
   } catch (error) {
-    console.log(error);
+    iziToast.error({
+      title: 'Error',
+      message: 'No response from server. Please try again.',
+      position: 'topRight',
+    });
   } finally {
     hideLoader();
   }
@@ -122,7 +157,11 @@ export const handleProductsListItemClick = async event => {
     openModal(cardId);
     renderModal(data);
   } catch (error) {
-    console.log(error);
+    iziToast.error({
+      title: 'error',
+      message: 'No response from server. Please try again.',
+      position: 'topRight',
+    });
   } finally {
     hideLoader();
   }
@@ -135,35 +174,45 @@ export const handleCategoryClick = async e => {
   showLoader();
   hideLoadMoreButton();
   clearProducts();
+  hideNotFoundDiv();
+
   currentPage = 1;
+  currentSearchQuery = '';
 
   try {
-    const currentCategory = e.target.textContent;
+    const currentCategory = e.target.textContent.trim();
     selectedCategory = currentCategory;
+
     const allCategoryBtn = document.querySelectorAll('.categories__btn');
     toggleActiveClass(allCategoryBtn, e.target, 'categories__btn--active');
-    let productsData;
-    if (currentCategory === 'All') {
-      currentPage = 1;
-      productsData = await fetchProducts(currentPage);
-      showLoadMoreButton();
-    } else {
-      productsData = await fetchByCategory(currentCategory);
-    }
 
-    if (productsData.products.length > 0) {
-      renderProducts(productsData.products);
-      hideLoadMoreButton();
-      hideNotFoundDiv();
+    const data =
+      currentCategory === 'All'
+        ? await fetchProducts(currentPage)
+        : await fetchByCategory(currentCategory, currentPage);
 
-      if (currentCategory === 'All') {
-        const totalPages = Math.ceil(productsData.total / ITEMS_PER_PAGE);
-        if (currentPage < totalPages) showLoadMoreButton();
+    const { products = [], total } = data || {};
+
+    if (products.length > 0) {
+      renderProducts(products);
+
+      if (hasMore(total, products, currentPage, ITEMS_PER_PAGE)) {
+        showLoadMoreButton();
+      } else {
+        hideLoadMoreButton();
       }
     } else {
+      clearActiveCategoryBtn();
       showNotFoundDiv();
     }
   } catch (error) {
+    iziToast.error({
+      title: 'Error',
+      message: 'No response from server. Please try again.',
+      position: 'topRight',
+    });
+    clearActiveCategoryBtn();
+    showNotFoundDiv();
     console.log(error);
   } finally {
     hideLoader();
@@ -173,23 +222,53 @@ export const handleCategoryClick = async e => {
 // пошук продуктів за ключовим словом - Олексій
 export const handleProductsByQuery = async event => {
   event.preventDefault();
-  const query = event.target.elements.searchValue.value.trim();
 
-  if (!query) return;
+  const form = event.currentTarget || event.target;
+  const query = form.elements.searchValue.value.trim();
+
+  currentPage = 1;
+  currentSearchQuery = query;
+  selectedCategory = 'All';
+
+  if (!query) {
+    clearActiveCategoryBtn();
+    hideLoadMoreButton();
+    return;
+  }
+
   clearProducts();
+  hideNotFoundDiv();
   hideLoadMoreButton();
+
   try {
     showLoader();
-    const { products } = await fetchQuery(query);
+
+    const { products, total } = await fetchQuery(query, currentPage);
 
     if (products.length === 0) {
       showNotFoundDiv();
+      return;
+    }
+
+    renderProducts(products);
+    hideNotFoundDiv();
+
+    if (hasMore(total, products, currentPage, ITEMS_PER_PAGE)) {
+      showLoadMoreButton();
     } else {
-      renderProducts(products);
-      hideNotFoundDiv();
+      hideLoadMoreButton();
+      iziToast.info({
+        message: "We're sorry, but you've reached the end.",
+        position: 'topRight',
+      });
     }
   } catch (error) {
-    console.log(error);
+    iziToast.error({
+      title: 'Error',
+      message: 'No response from server. Please try again.',
+      position: 'topRight',
+    });
+    showNotFoundDiv();
   } finally {
     hideLoader();
     clearActiveCategoryBtn();
@@ -198,6 +277,9 @@ export const handleProductsByQuery = async event => {
 
 // очищення форми - Олексій
 export const handleClearForm = () => {
+  currentPage = 1;
+  currentSearchQuery = '';
+  selectedCategory = 'All';
   clearProducts();
   hideNotFoundDiv();
   refs.form.reset();
