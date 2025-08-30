@@ -56,7 +56,8 @@ buyButton.addEventListener('click', () => {
   if (cart.length === 0) {
     iziToast.warning({
       title: 'Oops!',
-      message: 'Кошик порожній. Додайте товари перед покупкою.',
+      message:
+        'Cart is empty. Please add products before proceeding to checkout.',
       position: 'topRight',
     });
     return;
