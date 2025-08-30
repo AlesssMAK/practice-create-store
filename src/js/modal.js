@@ -1,5 +1,7 @@
 import { refs } from './refs';
 import { hideLoader, setCurrentProduct } from './helpers';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 const handleEscPress = event => {
   if (event.code === 'Escape') {
