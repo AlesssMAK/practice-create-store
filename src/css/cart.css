@@ -39,7 +39,7 @@
   margin: 0 0 1rem;
   padding-bottom: 0.5rem;
 
-  color: #2d3748;
+  color: var(--primary-text-color);
   font-size: 1.5rem;
 
   border-bottom: 2px solid #ff6b0a;
@@ -65,12 +65,12 @@
 }
 
 .cart-summary__label {
-  color: #4a5568;
+  color: var(--primary-text-color);
   font-size: 0.95rem;
 }
 
 .cart-summary__value {
-  color: #2d3748;
+  color: var(--primary-text-color);
   font-weight: 600;
 
   &:not(:last-child) {
