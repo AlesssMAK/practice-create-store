@@ -43,7 +43,6 @@ export const toggleActiveClass = (elements, activeElement, activeClass) => {
 export const clearActiveCategoryBtn = () => {
   const CategoryBtns = document.querySelectorAll('.categories__btn');
   CategoryBtns.forEach(btn => btn.classList.remove('categories__btn--active'));
-  console.log('ok clearActiveCategoryBtn');
 };
 
 export const clearProducts = () => {
@@ -131,4 +130,12 @@ export const showLoader = () => {
 
 export const hideLoader = () => {
   if (loader) loader.classList.add('hidden');
+};
+
+export const hasMore = (total, products, page, pageSize) => {
+  if (typeof total === 'number') {
+    const totalPages = Math.ceil(total / pageSize);
+    return page < totalPages;
+  }
+  return Array.isArray(products) && products.length === pageSize;
 };
